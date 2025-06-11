@@ -62,11 +62,11 @@ stopwords_total <- bind_rows(stopwords1, stopwords2_tbl)
 word_counts <- word_counts %>% 
   anti_join(stopwords_total, by = "word")
 
-# Filtrado final (mínimo 4 letras, sin NA ni palabras vacías, y algunas personalizadas)
+# Filtrado final (agrego el filtrado final de gutenberg project, porque lo había agregado manualmente en la actividad anterior, tmb desestimo palabras de menos de 3 letras)
 word_counts1 <- word_counts %>%
   filter(nchar(word) > 3) %>%
   filter(!is.na(word) & word != "") %>%
-  filter(!(word %in% c("dijo", "hacia", "entonces", "modo", "this", "luego", "aquí", "toda", "gran", "the", "gutenberg", "project", "después", "pues")))
+  filter(!(word %in% c("the", "gutenberg", "project")))
 
 # Gráfico de barras (top 25)
 top_words <- word_counts1 %>%
